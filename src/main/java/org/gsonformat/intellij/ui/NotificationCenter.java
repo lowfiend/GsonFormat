@@ -17,7 +17,7 @@ public class NotificationCenter {
         if(message  == null || message.trim().length()==0){
             return;
         }
-        Notification notification = new Notification("com.dim.plugin.Gsonformat", "Gsonformat ", espaceString(message), notificationType);
+        Notification notification = new Notification("com.dim.plugin.Gsonformat", "GsonFormat by Neyo edit", espaceString(message), notificationType);
         Notifications.Bus.notify(notification);
     }
 

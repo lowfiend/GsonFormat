@@ -4,6 +4,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import org.apache.http.util.TextUtils;
+import org.gsonformat.intellij.common.CheckUtil;
 import org.gsonformat.intellij.common.FieldHelper;
 import org.gsonformat.intellij.common.PsiClassUtil;
 import org.gsonformat.intellij.common.Try;
@@ -138,6 +139,24 @@ public abstract class Processor {
                 String method = "public ".concat(typeStr).concat("   is").concat(
                         captureName(fieldName)).concat("() {   return ").concat(
                         field.getGenerateFieldName()).concat(" ;} ");
+                cls.add(factory.createMethodFromText(method, cls));
+            } else  if (typeStr.equals("string") || typeStr.equals("String")) {
+                String method = "public ".concat(typeStr).concat("   get").concat(
+                        captureName(fieldName)).concat(
+                        "() {   return ").concat(
+                        field.getGenerateFieldName()).concat("!=null ? ").concat(field.getGenerateFieldName()).concat(":\"\";}");
+                cls.add(factory.createMethodFromText(method, cls));
+            } else if (typeStr.indexOf("List<") != -1) {
+                String method = "public ".concat(typeStr).concat("   get").concat(
+                        captureName(fieldName)).concat(
+                        "() {   return ").concat(
+                        field.getGenerateFieldName()).concat(" !=null ? ").concat(field.getGenerateFieldName()).concat(": new ArrayList<>();}");
+                cls.add(factory.createMethodFromText(method, cls));
+            } else if (!CheckUtil.getInstant().checkSimpleType(field.getType())){
+                String method = "public ".concat(typeStr).concat("   get").concat(
+                        captureName(fieldName)).concat(
+                        "() {   return ").concat(
+                        field.getGenerateFieldName()).concat(" !=null ? ").concat(field.getGenerateFieldName()).concat(": new ").concat(typeStr).concat("() ;}");
                 cls.add(factory.createMethodFromText(method, cls));
             } else {
                 String method = "public ".concat(typeStr).concat("   get").concat(

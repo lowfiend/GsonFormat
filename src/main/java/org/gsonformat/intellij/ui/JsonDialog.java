@@ -40,7 +40,7 @@ public class JsonDialog extends JFrame implements ConvertBridge.Operator {
         this.file = file;
         this.project = project;
         setContentPane(contentPane2);
-        setTitle("GsonFormat");
+        setTitle("GsonFormat by Neyo edit");
         getRootPane().setDefaultButton(okButton);
         this.setAlwaysOnTop(true);
         initGeneratePanel(file);
